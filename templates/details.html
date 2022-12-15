@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <section>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Hata!</strong> {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        {% if comp_id %}
+            <form action="{{ url_for('details_comp', comp_id=comp_id) }}" method="post">
+        {% endif %}
+        {% if prod_id %}
+            <form action="{{ url_for('details_prod', prod_id=prod_id) }}" method="post">
+        {% endif %}
+        {% if sale_id %}
+            <form action="{{ url_for('details_sale', sale_id=sale_id) }}" method="post">
+        {% endif %}
+            <button type="submit" class="btn btn-secondary">Değişiklikleri Onayla</button>
+            <table class="table">
+            <thead>
+                <tr>
+                    {% if comp_id %}
+                        <th scope="col">ID</th>
+                        <th scope="col">Şirket Adı</th>
+                        <th scope="col">Şehir</th>
+                        <th scope="col">Telefon Numarası</th>
+                        <th scope="col">Email</th>
+                    {% endif %}
+                    {% if prod_id %}
+                        <th scope="col">ID</th>
+                        <th scope="col">Ürün Adı</th>
+                        <th scope="col">Depo Sayısı</th>
+                    {% endif %}
+                    {% if sale_id %}
+                        <th scope="col">ID</th>
+                        <th scope="col">Şirket Adı</th>
+                        <th scope="col">Ürün Adı</th>
+                        <th scope="col">Satış Tarihi</th>
+                        <th scope="col">Satış Miktarı</th>
+                        <th scope="col">Adet Fiyatı</th>
+                    {% endif %}
+
+                </tr>
+            </thead>
+            <tbody>
+            {% if table %}
+                {% for i in range(0, length) %}
+                    <tr>
+                    {% if comp_id %}
+                        <td>{{ table[i][0] }}</td>
+                        <td><input type="text" class="form-control" placeholder="Şirket Adı" value="{{ table[i][1] }}" name="comp_name"></td>
+                        <td><input type="text" class="form-control" placeholder="Şehir" value="{{ table[i][2] }}" name="city"></td>
+                        <td><input type="text" class="form-control" placeholder="Telefon Numarası" value="{{ table[i][3] }}" name="phone_num"></td>
+                        <td><input type="email" class="form-control" placeholder="Email" value="{{ table[i][4] }}" name="comp_mail"></td>
+                    {% endif %}
+                    {% if prod_id %}
+                        <td>{{ table[i][0] }}</td>
+                        <td><input type="text" class="form-control" placeholder="Ürün Adı" value="{{ table[i][1] }}" name="prod_name"></td>
+                        <td><input type="text" class="form-control" placeholder="Depo Sayısı" value="{{ table[i][2] }}" name="stock_num"></td>
+                    {% endif %}
+                    {% if sale_id %}
+                        <td>{{ table[i][0] }}</td>
+                        <td><input type="text" class="form-control" placeholder="Şirket Adı" value="{{ table[i][1] }}" name="comp_name"></td>
+                        <td><input type="text" class="form-control" placeholder="Ürün Adı" value="{{ table[i][2] }}" name="prod_name"></td>
+                        <td><input type="text" class="form-control" placeholder="Satış Tarihi" value="{{ table[i][3] }}" name="sale_date"></td>
+                        <td><input type="text" class="form-control" placeholder="Satış Miktarı" value="{{ table[i][4] }}" name="sale_num"></td>
+                        <td><input type="text" class="form-control" placeholder="Adet fiyatı" value="{{ table[i][5] }}" name="price"></td>
+                    {% endif %}
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <br>
+        <table class="table">
+        <thead>
+                <tr>
+                    {% if comp_id %}
+                        <th scope="col">Ürün Adı</th>
+                        <th scope="col">Toplam Satış</th>
+                        <th scope="col">Ortalama Fiyat</th>
+                    {% endif %}
+                    {% if prod_id %}
+                        <th scope="col">Şirket Adı</th>
+                        <th scope="col">Telefon Numarası</th>
+                        <th scope="col">Toplam Satış</th>
+                        <th scope="col">Ortalama Fiyat</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+            {% if detail_table %}
+                {% for i in range(0, detail_length) %}
+                    <tr>
+                    {% if comp_id %}
+                        <td>{{ detail_table[i][0] }}</td>
+                        <td>{{ detail_table[i][1] }}</td>
+                        <td>{{ detail_table[i][2] }}</td>
+                    {% endif %}
+                    {% if prod_id %}
+                        <td>{{ detail_table[i][0] }}</td>
+                        <td>{{ detail_table[i][1] }}</td>
+                        <td>{{ detail_table[i][2] }}</td>
+                        <td>{{ detail_table[i][3] }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+        </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   <script type="text/javascript">
+   $(document).ready(function(){
+
+      $('.checkoption').click(function() {
+         $('.checkoption').not(this).prop('checked', false);
+      });
+
+   });
+   </script>
+    </section>
+{% endblock %}

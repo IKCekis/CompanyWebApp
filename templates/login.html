@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Hata!</strong> {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        <h1>Giriş Yap</h1>
+        <br>
+        <form action="/login", method="post">
+        <div class="container">
+            <div class="card">
+                <div class="image">
+                    <img src="/static/logo.webp" style="color: white" alt="Logo">
+                </div>
+                <div class="info">
+                    <div class="mb-3">
+                        <input type="text" class="form-control text-light bg-dark" id="exampleInputPassword1", placeholder="Kullanıcı Adı", name="user_name">
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control text-light bg-dark" id="exampleInputPassword1", placeholder="Şifre", name="user_pass">
+                    </div>
+                    {% if error != "" %}
+                      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Hata!</strong> {{ error }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
+                    {% endif %}
+
+                    <button type="submit" class="btn btn-primary">Onayla</button>
+                </div>
+            </div>
+        </div>
+
+
+
+        </form>
+
+{% endblock %}

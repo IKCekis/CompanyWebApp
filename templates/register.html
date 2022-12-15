@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1>Kayıt Ol</h1>
+        <form action="/register", method="post">
+          <div class="mb-3">
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp", placeholder="Email", name="email">
+          </div>
+          <div class="mb-3">
+            <input type="text" class="form-control" id="exampleInputPassword1", placeholder="Kullanıcı Adı", name="user_name">
+          </div>
+          <div class="mb-3">
+            <input type="password" class="form-control" id="exampleInputPassword1", placeholder="Şifre", name="user_pass">
+          </div>
+          <div class="mb-3">
+            <input type="password" class="form-control" id="exampleInputPassword1", placeholder="Şifreyi Onayla", name="user_pass_conf">
+            <p>{{ conf_error }}</p>
+          </div>
+            <br/>
+
+            {% if error != "" %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong>Hata!</strong> {{ error }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+
+          <button type="submit" class="btn btn-secondary">Onayla</button>
+        </form>
+    </div>
+{% endblock %}

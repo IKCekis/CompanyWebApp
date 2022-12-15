@@ -1,0 +1,88 @@
+a{
+    color: white;
+    text-decoration: none;
+}
+
+.welcome{
+    text-align: center;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card{
+    width: 35%;
+    min-width: 300px;
+    min-height: 400px;
+    height: 45%;
+    background-color: rgba(5, 17, 28, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.card img{
+    width: 250px;
+}
+
+.info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+body{
+    background-image: url("bgimg.png");
+    margin: 5px 10px;
+}
+
+.navbar-custom{
+    background-color: rgba(5, 17, 28, 0.8);
+}
+
+.btn{
+    display: inline-block;
+    margin: 5px 0;
+    border-color: #091f34;
+    background-color: #103254;
+
+}
+
+table{
+    background-color: rgba(5, 17, 28, 0.8);
+    padding: 20px 5px;
+}
+
+th{
+    color: white;
+}
+
+td{
+    color: white;
+}
+
+input{
+    background-color: #05111c;
+    margin: 5px 2px;
+    color: white;
+}
+
+.dropdown-menu{
+    padding: 7px;
+    background-color: #212529;
+}
+
+.dropdown.btn{
+    margin: 5px;
+}
+
+.btn:hover{
+    background-color: #b47e43;
+    border-color: #d59650;
+}

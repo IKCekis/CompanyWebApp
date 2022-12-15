@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <section>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Hata!</strong> {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Ekle
+          </button>
+            <form action="{{ url_for('add_sale') }}" method="post">
+                <ul class="dropdown-menu">
+                    <li>
+                        <input list="companies" type="text" class="form-control" placeholder="Şirket Adı" name="comp_name">
+                        <datalist id="companies">
+                            {% for c in company %}
+                                <option value="{{ c[0] }}">
+                            {% endfor %}
+                        </datalist>
+                    </li>
+                    <li>
+                        <input list="products" type="text" class="form-control" placeholder="Ürün Adı" name="prod_name">
+                        <datalist id="products">
+                            {% for p in product %}
+                                <option value="{{ p[0] }}">
+                            {% endfor %}
+                        </datalist>
+                    </li>
+                    <li><input type="date" class="form-control text-light bg-dark" placeholder="Satış Tarihi" name="sale_date" value="{{ today }}"></li>
+                    <li><input type="text" class="form-control text-light bg-dark" placeholder="Satış Miktarı" name="sale_num"></li>
+                    <li><input type="text" class="form-control text-light bg-dark" placeholder="Adet Fiyatı" name="price"></li>
+                    <hr>
+                    <li><button type="submit" class="btn btn-secondary">Onayla</button></li>
+                </ul>
+            </form>
+        </div>
+        <form action="{{ url_for('delete_sale') }}" method="post">
+            <button type="submit" class="btn btn-secondary">Sil</button>
+            <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Seç</th>
+                    <th scope="col">Şirket Adı</th>
+                    <th scope="col">Ürün Adı</th>
+                    <th scope="col">Satış Tarihi</th>
+                    <th scope="col">Satış Miktarı</th>
+                    <th scope="col">Adet Fiyatı</th>
+                    <th scope="col">Gelir</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if table %}
+                {% for i in range(0, length) %}
+                    <tr>
+                        <td><input onclick="checkedOnClick(this);" class="checkoption" id="Check{{ i }}" type="checkbox" name="select" value="{{table[i][0]}}"></td>
+                        <td><a href="{{ url_for('details_sale', sale_id=table[i][0]) }}">{{ table[i][1] }}</a></td>
+                        <td>{{ table[i][2] }}</td>
+                        <td>{{ table[i][3] }}</td>
+                        <td>{{ table[i][4] }}</td>
+                        <td>{{ table[i][5] }}</td>
+                        <td>{{ table[i][4]*table[i][5] }}</td>
+
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+        </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   <script type="text/javascript">
+   $(document).ready(function(){
+
+      $('.checkoption').click(function() {
+         $('.checkoption').not(this).prop('checked', false);
+      });
+
+   });
+   </script>
+    </section>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <section>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Hata!</strong> {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Ekle
+          </button>
+            <form action="{{ url_for('add_prod') }}" method="post">
+                <ul class="dropdown-menu">
+                    <li><input type="text" class="form-control text-light bg-dark" placeholder="Ürün Adı" name="prod_name"></li>
+                    <li><input type="text" class="form-control text-light bg-dark" placeholder="Depo Sayısı" name="stock_num"></li>
+                    <hr>
+                    <li><button type="submit" class="btn btn-secondary">Onayla</button></li>
+                </ul>
+            </form>
+        </div>
+        <form action="{{ url_for('delete_prod') }}" method="post">
+            <button type="submit" class="btn btn-secondary">Sil</button>
+            <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Seç</th>
+                    <th scope="col">Ürün Adı</th>
+                    <th scope="col">Depo Sayısı</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if table %}
+                {% for i in range(0, length) %}
+                    <tr>
+                        <td><input onclick="checkedOnClick(this);" class="checkoption" id="Check{{ i }}" type="checkbox" name="select" value="{{table[i][0]}}"></td>
+                        <td><a href="{{ url_for('details_prod', prod_id=table[i][0]) }}">{{ table[i][1] }}</a></td>
+                        <td>{{ table[i][2] }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+        </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   <script type="text/javascript">
+   $(document).ready(function(){
+
+      $('.checkoption').click(function() {
+         $('.checkoption').not(this).prop('checked', false);
+      });
+
+   });
+   </script>
+    </section>
+{% endblock %}

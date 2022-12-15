@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <section>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Hata!</strong> {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Ekle
+          </button>
+            <form action="{{ url_for('add_comp') }}" method="post">
+                <ul class="dropdown-menu">
+                    <li><input type="text" class="form-control text-light bg-dark" placeholder="Şirket Adı" name="comp_name"></li>
+                    <li><input type="text" class="form-control text-light bg-dark" placeholder="Şehir" name="city"></li>
+                    <li><input type="text" class="form-control text-light bg-dark" placeholder="Telefon Numarası" name="phone_num"></li>
+                    <li><input type="email" class="form-control text-light bg-dark" placeholder="Email" name="comp_mail"></li>
+                    <hr>
+                    <li><button type="submit" class="btn btn-primary">Onayla</button></li>
+                </ul>
+            </form>
+        </div>
+        <form action="{{ url_for('delete_comp') }}" method="post">
+            <button type="submit" class="btn btn-primary">Sil</button>
+            <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-white" scope="col">Seç</th>
+                    <th class="text-white" scope="col">Şirket Adı</th>
+                    <th class="text-white" scope="col">Şehir</th>
+                    <th class="text-white" scope="col">Telefon Numarası</th>
+                    <th class="text-white" scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if table %}
+                {% for i in range(0, length) %}
+                    <tr>
+                        <td class="text-white"><input onclick="checkedOnClick(this);" class="checkoption" id="Check{{ i }}" type="checkbox" name="select" value="{{table[i][0]}}"></td>
+                        <td class="text-white"><a href="{{ url_for('details_comp', comp_id=table[i][0]) }}">{{ table[i][1] }}</a></td>
+                        <td class="text-white">{{ table[i][2] }}</td>
+                        <td class="text-white">{{ table[i][3] }}</td>
+                        <td class="text-white">{{ table[i][4] }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+        </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   <script type="text/javascript">
+   $(document).ready(function(){
+
+      $('.checkoption').click(function() {
+         $('.checkoption').not(this).prop('checked', false);
+      });
+
+   });
+   </script>
+    </section>
+{% endblock %}
